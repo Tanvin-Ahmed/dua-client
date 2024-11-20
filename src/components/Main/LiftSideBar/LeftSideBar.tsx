@@ -1,9 +1,8 @@
 import { cn } from "@/utils";
-import { FC, HTMLAttributes, Suspense } from "react";
-import SearchBox from "./SearchBox";
-import List from "./List";
+import { FC, HTMLAttributes } from "react";
 import { axiosInstance } from "@/axiosInstance/instance";
 import { CategoryType } from "@/types";
+import LeftSidebarClient from "./LeftSidebarClient";
 
 const LeftSideBar: FC<HTMLAttributes<HTMLDivElement>> = async ({
   className,
@@ -19,19 +18,8 @@ const LeftSideBar: FC<HTMLAttributes<HTMLDivElement>> = async ({
       <div className="rounded-t-lg bg-green-600 py-3 text-center">
         <h1 className="text-white font-semibold">Categories</h1>
       </div>
-      <div className="p-2">
-        <SearchBox />
-      </div>
 
-      <div className="p-2 overflow-y-auto overflow-x-hidden space-y-4 w-full max-h-[76vh] lg:max-h-[45vh] xl:max-h-[62vh]">
-        {data.length
-          ? data.map((category) => (
-              <Suspense key={category.id}>
-                <List data={category} />
-              </Suspense>
-            ))
-          : null}
-      </div>
+      <LeftSidebarClient data={data} />
     </div>
   );
 };
