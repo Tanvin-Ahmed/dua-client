@@ -16,6 +16,7 @@ const useGetSubcategories = () => {
         );
 
         return data;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         return [];
       }

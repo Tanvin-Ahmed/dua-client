@@ -17,6 +17,7 @@ const useGetDuaNames = () => {
         );
 
         return data.filter((dua) => dua.dua_name_en);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         return [];
       }

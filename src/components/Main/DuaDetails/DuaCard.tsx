@@ -20,7 +20,9 @@ const DuaCard: FC<DuaCardType> = ({ dua, index }) => {
 
   return (
     <div
-      ref={(el) => (sectionRefs.current[index] = el)}
+      ref={(el) => {
+        sectionRefs.current[index] = el;
+      }}
       className="p-5 bg-white rounded-lg"
     >
       {/* Header */}
