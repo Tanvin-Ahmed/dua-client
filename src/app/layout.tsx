@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/utils";
 import { Suspense } from "react";
 import AppContext from "@/components/context/AppContext";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
