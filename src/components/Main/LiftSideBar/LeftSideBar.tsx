@@ -1,5 +1,5 @@
 import { cn } from "@/utils";
-import { FC, HTMLAttributes } from "react";
+import { FC, HTMLAttributes, Suspense } from "react";
 import SearchBox from "./SearchBox";
 import List from "./List";
 import { axiosInstance } from "@/axiosInstance/instance";
@@ -25,7 +25,11 @@ const LeftSideBar: FC<HTMLAttributes<HTMLDivElement>> = async ({
 
       <div className="p-2 overflow-y-auto overflow-x-hidden space-y-4 w-full max-h-[76vh] lg:max-h-[45vh] xl:max-h-[62vh]">
         {data.length
-          ? data.map((category) => <List key={category.id} data={category} />)
+          ? data.map((category) => (
+              <Suspense key={category.id}>
+                <List data={category} />
+              </Suspense>
+            ))
           : null}
       </div>
     </div>
