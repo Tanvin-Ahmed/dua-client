@@ -48,6 +48,12 @@ export interface DuaNameType {
   dua_name_en: string;
 }
 
+export interface CatNameType {
+  cat_name_bn: string;
+  cat_name_en: string;
+  cat_id: number;
+}
+
 export interface AllInfoType {
   category_id: number;
   category_name_bn: string;

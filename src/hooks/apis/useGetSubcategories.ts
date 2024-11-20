@@ -1,22 +1,21 @@
 import { axiosInstance } from "@/axiosInstance/instance";
-import { DuaNameType } from "@/types";
+import { SubcategoryType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
-const useGetDuaNames = () => {
+const useGetSubcategories = () => {
   const params = useSearchParams();
   const catId = params.get("cat");
-  const subCatId = params.get("subcat");
 
   const query = useQuery({
-    queryKey: ["duaNames", catId, subCatId],
+    queryKey: ["subcategories", catId],
     queryFn: async () => {
       try {
-        const { data } = await axiosInstance<DuaNameType[]>(
-          `/get-dua-name/${catId}/${subCatId}`
+        const { data } = await axiosInstance<SubcategoryType[]>(
+          `/get-sub-categories/${catId}`
         );
 
-        return data.filter((dua) => dua.dua_name_en);
+        return data;
       } catch (error) {
         return [];
       }
@@ -26,4 +25,4 @@ const useGetDuaNames = () => {
   return query;
 };
 
-export default useGetDuaNames;
+export default useGetSubcategories;

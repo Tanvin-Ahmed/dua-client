@@ -8,12 +8,14 @@ import useGetDuaDetails from "@/hooks/apis/useGetDuaDetails";
 import SectionCardSkeleton from "@/components/Skeletons/DuaDetails/SectionCardSkeleton";
 import DuaCardSkeleton from "@/components/Skeletons/DuaDetails/DuaCardSkeleton";
 
-const Middle: FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
+const DuaDetails: FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const { data, isLoading } = useGetDuaDetails();
 
   return (
     <div className={cn(className)}>
-      <DuaCategoryMenu />
+      <div className="lg:hidden">
+        <DuaCategoryMenu />
+      </div>
       <div className="flex flex-col gap-y-4 max-h-[55vh] lg:max-h-[65vh] xl:max-h-[80vh] overflow-hidden overflow-y-auto">
         {isLoading ? (
           <>
@@ -39,4 +41,4 @@ const Middle: FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   );
 };
 
-export default Middle;
+export default DuaDetails;

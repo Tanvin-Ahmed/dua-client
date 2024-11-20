@@ -5,10 +5,12 @@ const DuaCardSkeleton = () => {
     <div className="p-5 bg-white rounded-lg">
       {/* Header */}
       <div className="flex items-center space-x-4">
-        <Skeleton circle className="size-6" />
-        <h3 className="text-green-600 text-lg font-semibold">
-          <Skeleton count={0.75} />
-        </h3>
+        <div>
+          <Skeleton width={40} height={40} circle />
+        </div>
+        <div>
+          <Skeleton count={0.65} />
+        </div>
       </div>
       {/* body */}
       <div className="my-4 mb-6">
@@ -37,11 +39,11 @@ const DuaCardSkeleton = () => {
       </div>
       {/* footer */}
       <div className="flex justify-end items-center gap-x-3">
-        <Skeleton circle className="size-5" />
-        <Skeleton circle className="size-5" />
-        <Skeleton circle className="size-5" />
-        <Skeleton circle className="size-5" />
-        <Skeleton circle className="size-5" />
+        <Skeleton width={30} height={30} />
+        <Skeleton width={30} height={30} />
+        <Skeleton width={30} height={30} />
+        <Skeleton width={30} height={30} />
+        <Skeleton width={30} height={30} />
       </div>
     </div>
   );
