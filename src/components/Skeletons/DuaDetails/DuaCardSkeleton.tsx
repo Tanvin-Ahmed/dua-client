@@ -38,12 +38,15 @@ const DuaCardSkeleton = () => {
         </div>
       </div>
       {/* footer */}
-      <div className="flex justify-end items-center gap-x-3">
-        <Skeleton width={30} height={30} />
-        <Skeleton width={30} height={30} />
-        <Skeleton width={30} height={30} />
-        <Skeleton width={30} height={30} />
-        <Skeleton width={30} height={30} />
+      <div className="flex items-center justify-between gap-x-3">
+        <Skeleton height={45} width={45} className="rounded-full" />
+        <div className="flex items-center space-x-2">
+          <Skeleton width={30} height={30} />
+          <Skeleton width={30} height={30} />
+          <Skeleton width={30} height={30} />
+          <Skeleton width={30} height={30} />
+          <Skeleton width={30} height={30} />
+        </div>
       </div>
     </div>
   );
