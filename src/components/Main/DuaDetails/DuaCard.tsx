@@ -139,11 +139,10 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
                   max={audioRef.current?.duration || 100}
                   value={currentTime}
                   onChange={handleProgressChange}
-                  className="w-32 cursor-pointer accent-green-600"
+                  className="w-28 cursor-pointer accent-green-600"
                 />
                 <span className="text-sm text-gray-600">
-                  {formatTime(currentTime)} /{" "}
-                  {formatTime(audioRef.current?.duration || 0)}
+                  {formatTime((audioRef.current?.duration || 0) - currentTime)}
                 </span>
                 <button
                   onClick={handleLoopToggle}
