@@ -1,11 +1,10 @@
 import { axiosInstance } from "@/axiosInstance/instance";
 import { SubcategoryType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import useCatId from "../useCatId";
 
 const useGetSubcategories = () => {
-  const params = useSearchParams();
-  const catId = params.get("cat");
+  const catId = useCatId();
 
   const query = useQuery({
     queryKey: ["subcategories", catId],

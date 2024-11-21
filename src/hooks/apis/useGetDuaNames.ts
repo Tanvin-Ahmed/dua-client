@@ -1,12 +1,12 @@
 import { axiosInstance } from "@/axiosInstance/instance";
 import { DuaNameType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import useCatId from "../useCatId";
+import useSubCatId from "../useSubCatId";
 
 const useGetDuaNames = () => {
-  const params = useSearchParams();
-  const catId = params.get("cat");
-  const subCatId = params.get("subcat");
+  const catId = useCatId();
+  const subCatId = useSubCatId();
 
   const query = useQuery({
     queryKey: ["duaNames", catId, subCatId],

@@ -1,11 +1,10 @@
 import { axiosInstance } from "@/axiosInstance/instance";
 import { CatNameType } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import useCatId from "../useCatId";
 
 const useGetCategoryName = () => {
-  const params = useSearchParams();
-  const catId = params.get("cat");
+  const catId = useCatId();
 
   const query = useQuery({
     queryKey: ["categoryName", catId],
