@@ -86,7 +86,9 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
       <div className="my-4 mb-6 space-y-5">
         {dua.top_en && <p className="my-2">{dua.top_en}</p>}
         {dua.dua_arabic && (
-          <p className="my-2 text-right text-lg">{dua.dua_arabic}</p>
+          <p className="my-2 text-right text-xl font-semibold">
+            {dua.dua_arabic}
+          </p>
         )}
         {dua.transliteration_en && (
           <p className="font-semibold my-2">

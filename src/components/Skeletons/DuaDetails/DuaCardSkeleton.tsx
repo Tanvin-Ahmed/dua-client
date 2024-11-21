@@ -5,12 +5,8 @@ const DuaCardSkeleton = () => {
     <div className="p-5 bg-white rounded-lg">
       {/* Header */}
       <div className="flex items-center space-x-4">
-        <div>
-          <Skeleton width={40} height={40} circle />
-        </div>
-        <div>
-          <Skeleton count={0.65} />
-        </div>
+        <Skeleton width={40} height={40} circle />
+        <Skeleton width={100} height={10} />
       </div>
       {/* body */}
       <div className="my-4 mb-6">
