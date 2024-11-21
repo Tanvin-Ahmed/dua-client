@@ -1,9 +1,7 @@
 "use client";
 
-import useCatId from "@/hooks/useCatId";
-import useSubCatId from "@/hooks/useSubCatId";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Dispatch,
   MutableRefObject,
@@ -38,24 +36,28 @@ export const appContext = createContext<AppContextValues>(defaultValues);
 
 const AppContext = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
-  const catId = useCatId();
-  const subCatId = useSubCatId();
+  const params = useSearchParams();
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isCategoryOpen, setCategoryOpen] = useState(false);
 
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  const [firstRender, setFirstRender] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    if (!isMounted) return;
+    if (!isMounted || !firstRender) return;
 
-    router.push(`/?cat=${catId ?? 1}&subcat=${subCatId ?? 1}`);
-  }, [router, catId, subCatId, isMounted]);
+    const cat = params.get("cat");
+    const subCat = params.get("subcat");
+
+    router.push(`/?cat=${cat ?? 1}&subcat=${subCat ?? 1}`);
+    setFirstRender(false);
+  }, [router, params, isMounted, firstRender]);
 
   return (
     <appContext.Provider
