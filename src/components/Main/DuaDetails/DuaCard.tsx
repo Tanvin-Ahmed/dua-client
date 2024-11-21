@@ -83,7 +83,7 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
       </div>
 
       {/* Body */}
-      <div className="my-4 mb-6">
+      <div className="my-4 mb-6 space-y-5">
         {dua.top_en && <p className="my-2">{dua.top_en}</p>}
         {dua.dua_arabic && (
           <p className="my-2 text-right text-lg">{dua.dua_arabic}</p>
@@ -160,7 +160,11 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
         ) : null}
 
         {/* Actions */}
-        <div className="flex items-center space-x-2">
+        <div
+          className={cn("flex items-center space-x-2", {
+            "hidden sm:flex": isPlaying,
+          })}
+        >
           <div
             title="Copy"
             className="p-1 rounded cursor-pointer hover:bg-gray-100 transition-colors"
