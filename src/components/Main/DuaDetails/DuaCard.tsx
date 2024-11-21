@@ -26,6 +26,13 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const handlePlayPause = () => {
+    if (isCompleted) {
+      // Reset audio playback if completed
+      if (audioRef.current) {
+        audioRef.current.currentTime = 0;
+      }
+      setIsCompleted(false);
+    }
     if (isPlaying) {
       audioRef.current?.pause();
     } else {
@@ -34,31 +41,24 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
     setIsPlaying((prev) => !prev);
   };
 
+  const handleAudioEnded = () => {
+    if (!isLooping) {
+      setIsPlaying(false);
+      setIsCompleted(true); // Mark audio as completed
+      setCurrentTime(0); // Reset progress
+    }
+  };
+
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
     }
   };
 
-  // const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (audioRef.current) {
-  //     audioRef.current.currentTime = parseFloat(e.target.value);
-  //     setCurrentTime(audioRef.current.currentTime);
-  //   }
-  // };
-
   const handleLoopToggle = () => {
     if (audioRef.current) {
       audioRef.current.loop = !isLooping;
       setIsLooping((prev) => !prev);
-    }
-  };
-
-  const handleAudioEnded = () => {
-    if (!isLooping) {
-      setIsPlaying(false);
-      setIsCompleted(true); // Set the audio as completed
-      setCurrentTime(0); // Reset progress bar
     }
   };
 
@@ -122,57 +122,48 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
         })}
       >
         {/* Audio Player */}
-        {dua.audio ? (
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={handlePlayPause}
-              className="p-1 cursor-pointer size-11 bg-green-600 rounded-full hover:bg-green-700 transition-colors flex justify-center items-center"
-            >
-              {isPlaying ? (
-                <IoPauseOutline size={24} className="text-white" />
-              ) : (
-                <IoPlay size={24} className="text-white ml-0.5" />
-              )}
-            </button>
-
-            {/* Progress Bar and Loop Button */}
-            {!isCompleted && isPlaying && (
-              <div className="flex items-center space-x-2">
-                {/* <input
-                  type="range"
-                  min="0"
-                  max={audioRef.current?.duration || 100}
-                  value={currentTime}
-                  onChange={handleProgressChange}
-                  className="w-28 cursor-pointer accent-green-600"
-                /> */}
-                <CustomProgressBar
-                  currentTime={currentTime}
-                  duration={audioRef.current?.duration || 100}
-                  onProgressChange={(time) => {
-                    if (audioRef.current) {
-                      audioRef.current.currentTime = time;
-                      setCurrentTime(time);
-                    }
-                  }}
-                />
-
-                <span className="text-sm text-gray-600">
-                  {formatTime((audioRef.current?.duration || 0) - currentTime)}
-                </span>
-                <button
-                  onClick={handleLoopToggle}
-                  className={`p-1 rounded cursor-pointer ${
-                    isLooping ? "text-green-600" : "text-gray-500"
-                  }`}
-                  title="Toggle Loop"
-                >
-                  <CiRepeat size={20} />
-                </button>
-              </div>
+        {/* Audio Controls */}
+        <div className="flex items-center space-x-2">
+          {/* Play/Pause Button */}
+          <button
+            onClick={handlePlayPause}
+            className="p-1 cursor-pointer size-11 bg-green-600 rounded-full hover:bg-green-700 transition-colors flex justify-center items-center"
+          >
+            {isPlaying ? (
+              <IoPauseOutline size={24} className="text-white" />
+            ) : (
+              <IoPlay size={24} className="text-white ml-0.5" />
             )}
-          </div>
-        ) : null}
+          </button>
+
+          {/* Show Progress Bar, Timestamp, and Loop Button only when playing */}
+          {isPlaying && (
+            <div className="flex items-center space-x-2">
+              <CustomProgressBar
+                currentTime={currentTime}
+                duration={audioRef.current?.duration || 100}
+                onProgressChange={(time) => {
+                  if (audioRef.current) {
+                    audioRef.current.currentTime = time;
+                    setCurrentTime(time);
+                  }
+                }}
+              />
+              <span className="text-sm text-gray-600">
+                {formatTime((audioRef.current?.duration || 0) - currentTime)}
+              </span>
+              <button
+                onClick={handleLoopToggle}
+                className={`p-1 rounded cursor-pointer ${
+                  isLooping ? "text-green-600" : "text-gray-500"
+                }`}
+                title="Toggle Loop"
+              >
+                <CiRepeat size={20} />
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Actions */}
         <div
