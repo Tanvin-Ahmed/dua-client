@@ -7,7 +7,7 @@ import { useContext, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
 const DuaTimeline = () => {
-  const { sectionRefs } = useContext(appContext);
+  const { sectionRefs, setCategoryOpen } = useContext(appContext);
   const { data, isLoading } = useGetDuaNames();
   const [selectedDuaId, setSelectedDuaId] = useState(0);
 
@@ -22,7 +22,10 @@ const DuaTimeline = () => {
     data.map((dua) => (
       <div
         key={crypto.randomUUID()}
-        onClick={() => scrollToSection(dua.dua_id)}
+        onClick={() => {
+          scrollToSection(dua.dua_id);
+          setCategoryOpen(false);
+        }}
       >
         <div className="flex justify-start items-center gap-x-3 ml-1 my-2">
           <Image src={"/icons/duaarrow.svg"} height={12} width={12} alt="dua" />
