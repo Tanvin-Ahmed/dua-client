@@ -12,16 +12,15 @@ import { appContext } from "@/components/context/AppContext";
 
 interface DuaCardType {
   dua: DuaType;
-  index: number;
 }
 
-const DuaCard: FC<DuaCardType> = ({ dua, index }) => {
+const DuaCard: FC<DuaCardType> = ({ dua }) => {
   const { sectionRefs } = useContext(appContext);
 
   return (
     <div
       ref={(el) => {
-        sectionRefs.current[index] = el;
+        sectionRefs.current[dua.dua_id] = el;
       }}
       className="p-5 bg-white rounded-lg"
     >

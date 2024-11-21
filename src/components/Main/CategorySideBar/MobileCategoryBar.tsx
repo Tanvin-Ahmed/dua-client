@@ -3,22 +3,25 @@ import { appContext } from "@/components/context/AppContext";
 import { cn } from "@/utils";
 import { FC, ReactNode, useContext } from "react";
 
-interface MobileLeftSideBar {
+interface MobileCategoryBar {
   children: ReactNode;
 }
 
-const MobileLeftSideBar: FC<MobileLeftSideBar> = ({ children }) => {
+const MobileCategoryBar: FC<MobileCategoryBar> = ({ children }) => {
   const { isCategoryOpen, setCategoryOpen } = useContext(appContext);
 
   const toggleSidebar = () => {
     setCategoryOpen(false);
   };
 
-  return isCategoryOpen ? (
+  return (
     <>
       <div
         onClick={toggleSidebar}
-        className="lg:hidden fixed w-screen inset-0 bg-black/40 transition-opacity duration-300"
+        className={cn("lg:hidden duration-300", {
+          "fixed w-screen inset-0 bg-black/40 z-40": isCategoryOpen,
+          hidden: !isCategoryOpen,
+        })}
       />
       <div
         className={cn(
@@ -32,7 +35,7 @@ const MobileLeftSideBar: FC<MobileLeftSideBar> = ({ children }) => {
         {children}
       </div>
     </>
-  ) : null;
+  );
 };
 
-export default MobileLeftSideBar;
+export default MobileCategoryBar;

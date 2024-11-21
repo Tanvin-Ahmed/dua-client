@@ -29,7 +29,7 @@ const settingsData = [
   },
 ];
 
-const RightSideBar: FC<HTMLAttributes<HTMLDivElement>> = ({
+const SettingsBar: FC<HTMLAttributes<HTMLDivElement>> = ({
   className,
   ...rest
 }) => {
@@ -60,7 +60,7 @@ const RightSideBar: FC<HTMLAttributes<HTMLDivElement>> = ({
         <div className="flex flex-col justify-center gap-y-3 px-2">
           {settingsData.map((data) => (
             <div
-              key={data.id}
+              key={crypto.randomUUID()}
               className={cn("rounded-md bg-white gap-x-3", {
                 "border border-gray-200": selectedId === data.id,
               })}
@@ -100,70 +100,70 @@ const RightSideBar: FC<HTMLAttributes<HTMLDivElement>> = ({
           ))}
         </div>
       </div>
-      {isSettingsOpen && (
-        <>
-          <div
-            onClick={toggleSidebar}
-            className="2xl:hidden fixed w-screen inset-0 bg-black/40 transition-opacity duration-300"
-          />
-          <div
-            className={cn(
-              "2xl:hidden fixed z-50 top-0 right-0 h-screen w-64 shadow-lg bg-white rounded-l-3xl p-2 py-4 transform transition-transform duration-300 ease-in-out",
-              {
-                "translate-x-0": isSettingsOpen,
-                "translate-x-full": !isSettingsOpen,
-              }
-            )}
-          >
-            <h1 className="text-xl text-center mt-6">Settings</h1>
 
-            <div className="flex flex-col justify-center gap-y-3 px-2 mt-8">
-              {settingsData.map((data) => (
-                <div
-                  key={data.id}
-                  className={cn("rounded-md bg-white gap-x-3", {
-                    "border border-gray-200": selectedId === data.id,
+      <div
+        onClick={toggleSidebar}
+        className={cn("2xl:hidden duration-300", {
+          "fixed w-screen inset-0 bg-black/40": isSettingsOpen,
+          hidden: !isSettingsOpen,
+        })}
+      />
+      <div
+        className={cn(
+          "2xl:hidden fixed z-50 top-0 right-0 h-screen w-64 shadow-lg bg-white rounded-l-3xl p-2 py-4 transform transition-transform duration-300 ease-in-out",
+          {
+            "translate-x-0": isSettingsOpen,
+            "translate-x-full": !isSettingsOpen,
+          }
+        )}
+      >
+        <h1 className="text-xl text-center mt-6">Settings</h1>
+
+        <div className="flex flex-col justify-center gap-y-3 px-2 mt-8">
+          {settingsData.map((data) => (
+            <div
+              key={crypto.randomUUID()}
+              className={cn("rounded-md bg-white gap-x-3", {
+                "border border-gray-200": selectedId === data.id,
+              })}
+            >
+              <div
+                className={cn(
+                  "relative flex items-center bg-[#F7F8FA] p-2 px-4 cursor-pointer",
+                  {
+                    "before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1.5 before:h-full before:bg-green-500 before:rounded-l":
+                      selectedId === data.id,
+                  }
+                )}
+                onClick={() => handleSelectSetting(data.id)}
+              >
+                <Image
+                  src={data.icon}
+                  height={24}
+                  width={24}
+                  alt="translate"
+                  className={cn("rounded-full p-1 bg-[#eff2fc]", {
+                    "text-green-600": selectedId === data.id,
+                  })}
+                />
+                <p
+                  className={cn("text-gray-500 text-[12px]", {
+                    "text-green-600": selectedId === data.id,
                   })}
                 >
-                  <div
-                    className={cn(
-                      "relative flex items-center bg-[#F7F8FA] p-2 px-4 cursor-pointer",
-                      {
-                        "before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1.5 before:h-full before:bg-green-500 before:rounded-l":
-                          selectedId === data.id,
-                      }
-                    )}
-                    onClick={() => handleSelectSetting(data.id)}
-                  >
-                    <Image
-                      src={data.icon}
-                      height={24}
-                      width={24}
-                      alt="translate"
-                      className={cn("rounded-full p-1 bg-[#eff2fc]", {
-                        "text-green-600": selectedId === data.id,
-                      })}
-                    />
-                    <p
-                      className={cn("text-gray-500 text-[12px]", {
-                        "text-green-600": selectedId === data.id,
-                      })}
-                    >
-                      {data.label}
-                    </p>
-                  </div>
+                  {data.label}
+                </p>
+              </div>
 
-                  {selectedId === data.id && (
-                    <Menus className="mt-4 p-2 px-4" selectedId={selectedId} />
-                  )}
-                </div>
-              ))}
+              {selectedId === data.id && (
+                <Menus className="mt-4 p-2 px-4" selectedId={selectedId} />
+              )}
             </div>
-          </div>
-        </>
-      )}
+          ))}
+        </div>
+      </div>
     </>
   );
 };
 
-export default RightSideBar;
+export default SettingsBar;

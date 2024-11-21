@@ -2,14 +2,14 @@
 
 import { Suspense, useEffect, useState } from "react";
 import SearchBox from "./SearchBox";
-import List from "./List";
+import CategoryList from "./CategoryList";
 import { CategoryType } from "@/types";
 
 interface Props {
   data: CategoryType[];
 }
 
-const LeftSidebarClient = ({ data }: Props) => {
+const CategorySidebarClient = ({ data }: Props) => {
   const [categories, setCategories] = useState<CategoryType[] | []>(data ?? []);
   const [searchText, setSearchText] = useState("");
 
@@ -30,8 +30,8 @@ const LeftSidebarClient = ({ data }: Props) => {
       <div className="p-2 overflow-y-auto overflow-x-hidden space-y-4 w-full max-h-[76vh] lg:max-h-[45vh] xl:max-h-[62vh]">
         {categories.length ? (
           categories.map((category) => (
-            <Suspense key={category.id}>
-              <List data={category} />
+            <Suspense key={crypto.randomUUID()}>
+              <CategoryList data={category} />
             </Suspense>
           ))
         ) : (
@@ -42,4 +42,4 @@ const LeftSidebarClient = ({ data }: Props) => {
   );
 };
 
-export default LeftSidebarClient;
+export default CategorySidebarClient;

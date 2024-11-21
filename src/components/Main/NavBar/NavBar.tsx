@@ -18,7 +18,7 @@ const NavBar: FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
         className
       )}
     >
-      <div className="flex-[0.50] flex items-center">
+      <div className="flex-[0.62] flex items-center">
         <Image
           src={"/logo.png"}
           width={73}
@@ -26,10 +26,10 @@ const NavBar: FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
           alt="logo"
           className="xl:hidden"
         />
-        <h1 className="text-xl font-semibold hidden xl:block">Dua Page</h1>
+        <h1 className="text-2xl font-semibold hidden xl:block">Duas Page</h1>
         <h1 className="text-xl font-semibold xl:hidden">Dua & Ruqyah</h1>
       </div>
-      <div className="flex md:flex-[0.50] items-center justify-between">
+      <div className="flex md:flex-[0.38] items-center justify-between">
         <div className="hidden md:block">
           <SearchBox />
         </div>

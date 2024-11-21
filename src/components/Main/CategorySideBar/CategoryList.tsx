@@ -1,6 +1,6 @@
 "use client";
 import { FC, useCallback } from "react";
-import Card from "./Card";
+import CategoryCard from "./CategoryCard";
 import SubCategoryTimeline from "./SubCategoryTimeline";
 import { CategoryType } from "@/types";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -9,7 +9,7 @@ interface ListPropType {
   data: CategoryType;
 }
 
-const List: FC<ListPropType> = ({ data }) => {
+const CategoryList: FC<ListPropType> = ({ data }) => {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -23,7 +23,7 @@ const List: FC<ListPropType> = ({ data }) => {
 
   return (
     <div className="w-full">
-      <Card
+      <CategoryCard
         data={data}
         onClick={() => setQueryStringInUrl(`cat=${data.cat_id}`)}
         clicked={data.cat_id === Number(params.get("cat"))}
@@ -42,4 +42,4 @@ const List: FC<ListPropType> = ({ data }) => {
   );
 };
 
-export default List;
+export default CategoryList;

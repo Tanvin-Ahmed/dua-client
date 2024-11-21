@@ -2,7 +2,7 @@ import { cn } from "@/utils";
 import { FC, HTMLAttributes } from "react";
 import { axiosInstance } from "@/axiosInstance/instance";
 import { CategoryType } from "@/types";
-import LeftSidebarClient from "./LeftSidebarClient";
+import CategorySidebarClient from "./CategorySidebarClient";
 
 const LeftSideBar: FC<HTMLAttributes<HTMLDivElement>> = async ({
   className,
@@ -19,7 +19,7 @@ const LeftSideBar: FC<HTMLAttributes<HTMLDivElement>> = async ({
         <h1 className="text-white font-semibold">Categories</h1>
       </div>
 
-      <LeftSidebarClient data={data} />
+      <CategorySidebarClient data={data} />
     </div>
   );
 };
