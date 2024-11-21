@@ -3,7 +3,9 @@ import { FC, useCallback } from "react";
 import CategoryCard from "./CategoryCard";
 import SubCategoryTimeline from "./SubCategoryTimeline";
 import { CategoryType } from "@/types";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import useCatId from "@/hooks/useCatId";
+import useSubCatId from "@/hooks/useSubCatId";
 
 interface ListPropType {
   data: CategoryType;
@@ -12,7 +14,8 @@ interface ListPropType {
 const CategoryList: FC<ListPropType> = ({ data }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const params = useSearchParams();
+  const catId = useCatId();
+  const subCatId = useSubCatId();
 
   const setQueryStringInUrl = useCallback(
     (queryString: string) => {
@@ -26,16 +29,12 @@ const CategoryList: FC<ListPropType> = ({ data }) => {
       <CategoryCard
         data={data}
         onClick={() => setQueryStringInUrl(`cat=${data.cat_id}`)}
-        clicked={data.cat_id === Number(params.get("cat"))}
+        clicked={data.cat_id === catId}
       />
 
-      {!!Number(params.get("cat")) &&
-      Number(params.get("cat")) === data.cat_id ? (
+      {catId && catId === data.cat_id ? (
         <>
-          <SubCategoryTimeline
-            catId={Number(params.get("cat"))}
-            subCatId={Number(params.get("subcat"))}
-          />
+          <SubCategoryTimeline catId={catId} subCatId={subCatId!} />
         </>
       ) : null}
     </div>

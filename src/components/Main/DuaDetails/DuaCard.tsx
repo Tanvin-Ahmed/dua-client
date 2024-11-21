@@ -10,6 +10,7 @@ import { FC, useContext, useState, useRef } from "react";
 import { appContext } from "@/components/context/AppContext";
 import { cn } from "@/utils";
 import { CiRepeat } from "react-icons/ci";
+import CustomProgressBar from "./CustomProgressBar";
 
 interface DuaCardType {
   dua: DuaType;
@@ -39,12 +40,12 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
     }
   };
 
-  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = parseFloat(e.target.value);
-      setCurrentTime(audioRef.current.currentTime);
-    }
-  };
+  // const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (audioRef.current) {
+  //     audioRef.current.currentTime = parseFloat(e.target.value);
+  //     setCurrentTime(audioRef.current.currentTime);
+  //   }
+  // };
 
   const handleLoopToggle = () => {
     if (audioRef.current) {
@@ -64,7 +65,9 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" + seconds : seconds}`;
+    return `${minutes < 10 ? "0" + minutes : minutes}:${
+      seconds < 10 ? "0" + seconds : seconds
+    }`;
   };
 
   return (
@@ -86,7 +89,7 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
       <div className="my-4 mb-6 space-y-5">
         {dua.top_en && <p className="my-2">{dua.top_en}</p>}
         {dua.dua_arabic && (
-          <p className="my-2 text-right text-xl font-semibold">
+          <p className="my-2 text-right text-3xl quran-font">
             {dua.dua_arabic}
           </p>
         )}
@@ -135,14 +138,25 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
             {/* Progress Bar and Loop Button */}
             {!isCompleted && isPlaying && (
               <div className="flex items-center space-x-2">
-                <input
+                {/* <input
                   type="range"
                   min="0"
                   max={audioRef.current?.duration || 100}
                   value={currentTime}
                   onChange={handleProgressChange}
                   className="w-28 cursor-pointer accent-green-600"
+                /> */}
+                <CustomProgressBar
+                  currentTime={currentTime}
+                  duration={audioRef.current?.duration || 100}
+                  onProgressChange={(time) => {
+                    if (audioRef.current) {
+                      audioRef.current.currentTime = time;
+                      setCurrentTime(time);
+                    }
+                  }}
                 />
+
                 <span className="text-sm text-gray-600">
                   {formatTime((audioRef.current?.duration || 0) - currentTime)}
                 </span>

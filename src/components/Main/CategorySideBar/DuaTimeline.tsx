@@ -1,15 +1,18 @@
 "use client";
 import { appContext } from "@/components/context/AppContext";
 import useGetDuaNames from "@/hooks/apis/useGetDuaNames";
+import { cn } from "@/utils";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
 const DuaTimeline = () => {
   const { sectionRefs } = useContext(appContext);
   const { data, isLoading } = useGetDuaNames();
+  const [selectedDuaId, setSelectedDuaId] = useState(0);
 
   const scrollToSection = (id: number): void => {
+    setSelectedDuaId(id);
     sectionRefs.current[id]?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -21,9 +24,15 @@ const DuaTimeline = () => {
         key={crypto.randomUUID()}
         onClick={() => scrollToSection(dua.dua_id)}
       >
-        <div className="flex justify-start items-center gap-x-3 ml-11 my-2">
+        <div className="flex justify-start items-center gap-x-3 ml-1 my-2">
           <Image src={"/icons/duaarrow.svg"} height={12} width={12} alt="dua" />
-          <p className="text-[12px] cursor-pointer">{dua.dua_name_en}</p>
+          <p
+            className={cn("text-[12px] cursor-pointer", {
+              "text-green-600": dua.dua_id === selectedDuaId,
+            })}
+          >
+            {dua.dua_name_en}
+          </p>
         </div>
       </div>
     ))

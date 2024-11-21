@@ -6,3 +6,7 @@ body {
   @apply overflow-hidden;
   scroll-behavior: smooth;
 }
+
+.quran-font {
+  font-family: "MeQuran";
+}

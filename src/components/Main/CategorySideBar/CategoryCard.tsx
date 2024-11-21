@@ -18,7 +18,7 @@ const CategoryCard: FC<CardPropType> = ({
     <div
       {...rest}
       className={cn(
-        "w-full cursor-pointer rounded-lg p-2 flex items-center justify-between",
+        "w-full cursor-pointer rounded-lg p-2 flex items-center justify-between transition hover:bg-[#E8F0F5]",
         className,
         {
           "bg-[#E8F0F5]": clicked,
@@ -43,7 +43,7 @@ const CategoryCard: FC<CardPropType> = ({
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <div className="h-10 w-[1px] bg-gray-300" />
+        <div className="h-10 w-[1px] bg-[#E8F0F5]" />
         <div className="flex flex-col justify-center items-center">
           <p className="font-semibold">{data.no_of_dua}</p>
           <p className="text-gray-500 text-sm">Duas</p>
