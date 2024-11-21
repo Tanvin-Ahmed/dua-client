@@ -11,6 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient();
 
@@ -68,7 +69,10 @@ const AppContext = ({ children }: { children: ReactNode }) => {
         sectionRefs,
       }}
     >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <Toaster position="bottom-center" reverseOrder={false} />
+        {children}
+      </QueryClientProvider>
     </appContext.Provider>
   );
 };

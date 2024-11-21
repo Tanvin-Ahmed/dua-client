@@ -11,6 +11,7 @@ import { appContext } from "@/components/context/AppContext";
 import { cn } from "@/utils";
 import { CiRepeat } from "react-icons/ci";
 import CustomProgressBar from "./CustomProgressBar";
+import toast from "react-hot-toast";
 
 interface DuaCardType {
   dua: DuaType;
@@ -24,6 +25,7 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const duaContentRef = useRef<HTMLDivElement>(null); // Ref for content to be copied
 
   const handlePlayPause = () => {
     if (isCompleted) {
@@ -70,6 +72,20 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
     }`;
   };
 
+  const copyContent = () => {
+    if (duaContentRef.current) {
+      const content = duaContentRef.current.innerText;
+      const copiedText = `${dua.dua_id}. ${
+        dua.dua_name_en ?? ""
+      }\n\n${content}\n\nCopied From:\nDua & Ruqyah (Hisnul Muslim)`;
+
+      // Using the Clipboard API to copy the text
+      navigator.clipboard.writeText(copiedText).then(() => {
+        toast.success("Copied!");
+      });
+    }
+  };
+
   return (
     <div
       ref={(el) => {
@@ -86,7 +102,7 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
       </div>
 
       {/* Body */}
-      <div className="my-4 mb-6 space-y-5">
+      <div className="my-4 mb-6 space-y-5" ref={duaContentRef}>
         {dua.top_en && <p className="my-2">{dua.top_en}</p>}
         {dua.dua_arabic && (
           <p className="my-2 text-right text-3xl quran-font">
@@ -123,47 +139,49 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
       >
         {/* Audio Player */}
         {/* Audio Controls */}
-        <div className="flex items-center space-x-2">
-          {/* Play/Pause Button */}
-          <button
-            onClick={handlePlayPause}
-            className="p-1 cursor-pointer size-11 bg-green-600 rounded-full hover:bg-green-700 transition-colors flex justify-center items-center"
-          >
-            {isPlaying ? (
-              <IoPauseOutline size={24} className="text-white" />
-            ) : (
-              <IoPlay size={24} className="text-white ml-0.5" />
-            )}
-          </button>
+        {dua.audio ? (
+          <div className="flex items-center space-x-2">
+            {/* Play/Pause Button */}
+            <button
+              onClick={handlePlayPause}
+              className="p-1 cursor-pointer size-11 bg-green-600 rounded-full hover:bg-green-700 transition-colors flex justify-center items-center"
+            >
+              {isPlaying ? (
+                <IoPauseOutline size={24} className="text-white" />
+              ) : (
+                <IoPlay size={24} className="text-white ml-0.5" />
+              )}
+            </button>
 
-          {/* Show Progress Bar, Timestamp, and Loop Button only when playing */}
-          {isPlaying && (
-            <div className="flex items-center space-x-2">
-              <CustomProgressBar
-                currentTime={currentTime}
-                duration={audioRef.current?.duration || 100}
-                onProgressChange={(time) => {
-                  if (audioRef.current) {
-                    audioRef.current.currentTime = time;
-                    setCurrentTime(time);
-                  }
-                }}
-              />
-              <span className="text-sm text-gray-600">
-                {formatTime((audioRef.current?.duration || 0) - currentTime)}
-              </span>
-              <button
-                onClick={handleLoopToggle}
-                className={`p-1 rounded cursor-pointer ${
-                  isLooping ? "text-green-600" : "text-gray-500"
-                }`}
-                title="Toggle Loop"
-              >
-                <CiRepeat size={20} />
-              </button>
-            </div>
-          )}
-        </div>
+            {/* Show Progress Bar, Timestamp, and Loop Button only when playing */}
+            {isPlaying && (
+              <div className="flex items-center space-x-2">
+                <CustomProgressBar
+                  currentTime={currentTime}
+                  duration={audioRef.current?.duration || 100}
+                  onProgressChange={(time) => {
+                    if (audioRef.current) {
+                      audioRef.current.currentTime = time;
+                      setCurrentTime(time);
+                    }
+                  }}
+                />
+                <span className="text-sm text-gray-600">
+                  {formatTime((audioRef.current?.duration || 0) - currentTime)}
+                </span>
+                <button
+                  onClick={handleLoopToggle}
+                  className={`p-1 rounded cursor-pointer ${
+                    isLooping ? "text-green-600" : "text-gray-500"
+                  }`}
+                  title="Toggle Loop"
+                >
+                  <CiRepeat size={20} />
+                </button>
+              </div>
+            )}
+          </div>
+        ) : null}
 
         {/* Actions */}
         <div
@@ -171,12 +189,13 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
             "hidden sm:flex": isPlaying,
           })}
         >
-          <div
+          <button
             title="Copy"
-            className="p-1 rounded cursor-pointer hover:bg-gray-100 transition-colors"
+            className="p-1 rounded cursor-pointer hover:bg-gray-100 transition-colors border-none bg-transparent"
+            onClick={copyContent}
           >
             <IoCopyOutline size={20} className="text-gray-500" />
-          </div>
+          </button>
           <div
             title="Bookmark"
             className="p-1 rounded cursor-pointer hover:bg-gray-100 transition-colors"
