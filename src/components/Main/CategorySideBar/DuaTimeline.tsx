@@ -7,13 +7,13 @@ import { useContext, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
 const DuaTimeline = () => {
-  const { sectionRefs, setCategoryOpen } = useContext(appContext);
+  const { duaCardRef, setCategoryOpen } = useContext(appContext);
   const { data, isLoading } = useGetDuaNames();
   const [selectedDuaId, setSelectedDuaId] = useState(0);
 
   const scrollToSection = (id: number): void => {
     setSelectedDuaId(id);
-    sectionRefs.current[id]?.scrollIntoView({ behavior: "smooth" });
+    duaCardRef.current[id]?.scrollIntoView({ behavior: "smooth" });
   };
 
   return isLoading ? (

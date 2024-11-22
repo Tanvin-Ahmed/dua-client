@@ -20,6 +20,7 @@ interface AppContextValues {
   setIsSettingsOpen: Dispatch<SetStateAction<boolean>>;
   isCategoryOpen: boolean;
   setCategoryOpen: Dispatch<SetStateAction<boolean>>;
+  duaCardRef: MutableRefObject<(HTMLDivElement | null)[]>;
   sectionRefs: MutableRefObject<(HTMLDivElement | null)[]>;
 }
 
@@ -29,6 +30,7 @@ const defaultValues: AppContextValues = {
   setIsSettingsOpen: () => {},
   isCategoryOpen: false,
   setCategoryOpen: () => {},
+  duaCardRef: { current: [] },
   sectionRefs: { current: [] },
 };
 
@@ -41,6 +43,7 @@ const AppContext = ({ children }: { children: ReactNode }) => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isCategoryOpen, setCategoryOpen] = useState(false);
 
+  const duaCardRef = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const [firstRender, setFirstRender] = useState(true);
@@ -66,6 +69,7 @@ const AppContext = ({ children }: { children: ReactNode }) => {
         setIsSettingsOpen,
         isCategoryOpen,
         setCategoryOpen,
+        duaCardRef,
         sectionRefs,
       }}
     >

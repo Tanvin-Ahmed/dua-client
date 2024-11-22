@@ -28,7 +28,10 @@ const DuaDetails: FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
           <>
             {data.subcategories.map((subCat) => (
               <Fragment key={crypto.randomUUID()}>
-                <SectionCard sectionName={subCat.subcat_name_en} />
+                <SectionCard
+                  sectionName={subCat.subcat_name_en}
+                  sectionId={subCat.subcat_id}
+                />
                 {subCat.dua_list.map((dua) => (
                   <DuaCard key={crypto.randomUUID()} dua={dua} />
                 ))}

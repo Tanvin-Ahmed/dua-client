@@ -18,7 +18,7 @@ interface DuaCardType {
 }
 
 const DuaCard: FC<DuaCardType> = ({ dua }) => {
-  const { sectionRefs } = useContext(appContext);
+  const { duaCardRef } = useContext(appContext);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
@@ -89,7 +89,7 @@ const DuaCard: FC<DuaCardType> = ({ dua }) => {
   return (
     <div
       ref={(el) => {
-        sectionRefs.current[dua.dua_id] = el;
+        duaCardRef.current[dua.dua_id] = el;
       }}
       className="p-5 bg-white rounded-lg"
     >
